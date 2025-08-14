@@ -302,23 +302,23 @@ export default function PosPage() {
 
   const [activeCategory, setActiveCategory] = useState("الكل");
   const [searchTerm, setSearchTerm] = useState("");
-  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] useState(false);
   const [completedInvoice, setCompletedInvoice] = useState<Invoice | null>(null);
   
   // Customer state
-  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
-  const [isCustomerDialogOpen, setIsCustomerDialogOpen] = useState(false);
-  const [newCustomerName, setNewCustomerName] = useState("");
-  const [newCustomerPhone, setNewCustomerPhone] = useState("");
+  const [selectedCustomerId, setSelectedCustomerId] useState<string | null>(null);
+  const [isCustomerDialogOpen, setIsCustomerDialogOpen] useState(false);
+  const [newCustomerName, setNewCustomerName] useState("");
+  const [newCustomerPhone, setNewCustomerPhone] useState("");
 
   // Discount state
-  const [isDiscountDialogOpen, setIsDiscountDialogOpen] = useState(false);
-  const [discountType, setDiscountType] = useState<'percentage' | 'amount'>('amount');
+  const [isDiscountDialogOpen, setIsDiscountDialogOpen] useState(false);
+  const [discountType, setDiscountType] useState<'percentage' | 'amount'>('amount');
   const [discountValue, setDiscountValue] = useState('');
 
 
   const t = translations[language];
-  const categories = [t.allCategory, ...new Set(products.map(p => p.category))];
+  const categories = useMemo(() => [t.allCategory, ...Array.from(new Set(products.map(p => p.category)))], [products, t.allCategory]);
 
   const activeTable = activeOrder?.type === 'table' ? tables.find(t => t.id === activeOrder.id) : null;
   const cart = activeOrder?.type === 'table' && activeTable ? activeTable.cart : (activeOrder?.type === 'takeaway' ? takeawayCart : []);
@@ -745,3 +745,5 @@ export default function PosPage() {
     </>
   );
 }
+
+    
